@@ -7,6 +7,7 @@ package main;
 
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 import modelo.Paciente;
 
 /**
@@ -16,6 +17,7 @@ import modelo.Paciente;
 public class VistaPrincipal extends javax.swing.JFrame {
 
     ArrayList<Paciente> listaPacientes;
+    DefaultTableModel modelo;
     
     /**
      * Creates new form VistaPrincipal
@@ -24,6 +26,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         listaPacientes = new ArrayList();
+        
+        Paciente p1 = new Paciente(1, "Luis", "Ramos", 20, "Masculino", 2, "Sin observaciones", "A+", "En espera");
+        Paciente p2 = new Paciente(2, "Mario", "Zelaya", 20, "Masculino", 3, "Sin observaciones", "O", "Atendido");
+        Paciente p3 = new Paciente(3, "Julio", "Torres", 21, "Masculino", 1, "Sin observaciones", "A+", "En espera");
+        
+        listaPacientes.add(p1);
+        listaPacientes.add(p2);
+        listaPacientes.add(p3);
+        
+        mostrarTabla();
     }
 
     /**
@@ -351,6 +363,20 @@ public class VistaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnlimpiarActionPerformed
 
+    private void mostrarTabla(){
+        modelo = (DefaultTableModel) tbpaciente.getModel();
+        modelo.setRowCount(0);
+        int i = 1;
+        
+        for(Paciente x : listaPacientes){
+            modelo.addRow(new Object[]{i, x.getNombre(), x.getEdad(), x.getGenero(), x.getObservaciones(), x.getNivel(), x.getEstado()});
+            i++;
+        }
+
+        tbpaciente.setModel(modelo);
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
