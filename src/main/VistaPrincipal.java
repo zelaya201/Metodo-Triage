@@ -7,7 +7,10 @@ package main;
 
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ColaArrayPrioridad;
+import modelo.ListaEspera;
 import modelo.Paciente;
 
 /**
@@ -18,23 +21,30 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     ArrayList<Paciente> listaPacientes;
     DefaultTableModel modelo;
-    
+
     /**
      * Creates new form VistaPrincipal
      */
+    ColaArrayPrioridad colaP;
+
     public VistaPrincipal() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         listaPacientes = new ArrayList();
-        
-        Paciente p1 = new Paciente(1, "Luis", "Ramos", 20, "Masculino", 2, "Sin observaciones", "A+", "En espera");
-        Paciente p2 = new Paciente(2, "Mario", "Zelaya", 20, "Masculino", 3, "Sin observaciones", "O", "Atendido");
-        Paciente p3 = new Paciente(3, "Julio", "Torres", 21, "Masculino", 1, "Sin observaciones", "A+", "En espera");
-        
-        listaPacientes.add(p1);
-        listaPacientes.add(p2);
-        listaPacientes.add(p3);
-        
+        colaP = new ColaArrayPrioridad();
+//        Paciente p1 = new Paciente("1", "Luis Ramos", "20", "Masculino", 2, "Sin observaciones", "En espera");
+//        Paciente p2 = new Paciente("2", "Mario Zelaya", "19", "Masculino", 3, "Sin observaciones", "Atendido");
+//        Paciente p3 = new Paciente("3", "Julio Torres", "32", "Masculino", 1, "Sin observaciones", "En espera");
+
+//        listaPacientes.add(p1);
+//        listaPacientes.add(p2);
+//        listaPacientes.add(p3);
+//        colaP.offer(p1);
+//        colaP.offer(p2);
+//        colaP.offer(p3);
+//        ListaEspera modelo = new ListaEspera(colaP.toArray());
+//        jLespera.setModel(modelo);
+//        
         mostrarTabla();
     }
 
@@ -203,7 +213,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jScrollPane4.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         jScrollPane4.setOpaque(false);
 
-        tbpaciente.setBackground(new java.awt.Color(255, 255, 255));
         tbpaciente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(249, 249, 249)));
         tbpaciente.setForeground(new java.awt.Color(255, 255, 255));
         tbpaciente.setModel(new javax.swing.table.DefaultTableModel(
@@ -274,7 +283,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jPanel1.add(jTnom, gridBagConstraints);
 
         cbgene.setForeground(new java.awt.Color(51, 51, 51));
-        cbgene.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Femenido", "Otro" }));
+        cbgene.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Femenino", "Otro" }));
         cbgene.setColorArrow(new java.awt.Color(58, 66, 226));
         cbgene.setColorBorde(new java.awt.Color(204, 204, 204));
         cbgene.setColorFondo(new java.awt.Color(255, 255, 255));
@@ -352,31 +361,72 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
-        //JOptionPane.showMessageDialog(null, "AQUI OBVIAMENTE FUNCIONA");
+
+        String nombre = this.jTnom.getText();
+        String edad = this.jTedad.getText();
+        String genero = this.cbgene.getSelectedItem().toString();
+        int nivel = 0;
+        String nivelCadena = this.cbnivel.getSelectedItem().toString();
+        String observacion = this.jTobserv.getText();
+        if (nivelCadena.equals("Muy Grave")) {
+            nivel = 1;
+        } else if (nivelCadena.equals("Grave")) {
+            nivel = 2;
+        } else if (nivelCadena.equals("Moderado")) {
+            nivel = 3;
+        } else if (nivelCadena.equals("Leve")) {
+            nivel = 4;
+        }
+//         Mario es el encargado del las prioridades
+        Paciente p = new Paciente("1", nombre, edad, genero, nivel, observacion, " MARIO");
+        listaPacientes.add(p);
+        mostrarListaEspera(p);
+        mostrarTabla();
+        limpiar();
     }//GEN-LAST:event_btnagregarActionPerformed
 
     private void btnatenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnatenderActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "PROBANDO CARAJO");
     }//GEN-LAST:event_btnatenderActionPerformed
 
     private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnlimpiarActionPerformed
 
-    private void mostrarTabla(){
+    public void limpiar(){
+        this.jTnom.setText("");
+        this.jTedad.setText("");
+        this.cbgene.setSelectedIndex(0);
+        this.cbnivel.setSelectedIndex(0);
+        this.jTobserv.setText("");
+    }
+    
+    public void mostrarListaEspera(Paciente p){
+        colaP.offer(p);
+        ListaEspera modelo = new ListaEspera(colaP.toArray());
+        jLespera.setModel(modelo);
+    }
+    
+    private void mostrarTabla() {
+        
         modelo = (DefaultTableModel) tbpaciente.getModel();
         modelo.setRowCount(0);
- 
         
         for(Paciente x : listaPacientes){
-            modelo.addRow(new Object[]{x.getCodigo(), x.getNombre(), x.getEdad(), x.getGenero(), x.getObservaciones(), x.getNivel(), x.getEstado()});
-     
+            modelo.addRow(new Object[]{x.getNumero(), 
+                x.getNombre(), 
+                x.getEdad(), 
+                x.getGenero(), 
+                x.getObservaciones(), 
+                x.getNivel(), 
+                x.getEstado()
+            });
+
         }
 
         tbpaciente.setModel(modelo);
-        
     }
-    
+
     /**
      * @param args the command line arguments
      */

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 /**
  *
  * @author Luis Vaquerano
+ * @param <T>
  */
 public class ColaArrayPrioridad <T> {
     ArrayList cola;

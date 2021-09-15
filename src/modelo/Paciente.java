@@ -9,40 +9,38 @@ package modelo;
  *
  * @author Luis Vaquerano
  */
-public class Paciente implements Comparable<Paciente>{
+public class Paciente implements Comparable<Paciente> {
+
     //Datos personales del paciente
-    private int codigo;//Autoincrementable
+    private String numero;//Autoincrementable
     private String nombre;
-    private String apellido;
-    private int edad;
+    private String edad;
     private String genero;
     //Datos clinicos del paciente
     private int nivel; //leve, grave, muy grave
     private String observaciones;
-    private String tipoSangre;
     private String estado; //En espera, atendido, de alta, cancelado (fallecido o retirado)
 
     public Paciente() {
     }
 
-    public Paciente(int codigo, String nombre, String apellido, int edad, String genero, int nivel, String observaciones, String tipoSangre, String estado) {
-        this.codigo = codigo;
+    // Constructor para guardado en el array
+    public Paciente(String numero, String nombre, String edad, String genero, int nivel, String observaciones, String estado) {
+        this.numero = numero;
         this.nombre = nombre;
-        this.apellido = apellido;
         this.edad = edad;
         this.genero = genero;
         this.nivel = nivel;
         this.observaciones = observaciones;
-        this.tipoSangre = tipoSangre;
         this.estado = estado;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     public String getNombre() {
@@ -53,19 +51,11 @@ public class Paciente implements Comparable<Paciente>{
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public int getEdad() {
+    public String getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(String edad) {
         this.edad = edad;
     }
 
@@ -93,14 +83,6 @@ public class Paciente implements Comparable<Paciente>{
         this.observaciones = observaciones;
     }
 
-    public String getTipoSangre() {
-        return tipoSangre;
-    }
-
-    public void setTipoSangre(String tipoSangre) {
-        this.tipoSangre = tipoSangre;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -111,15 +93,16 @@ public class Paciente implements Comparable<Paciente>{
 
     @Override
     public int compareTo(Paciente o) {
-        if(nivel >= o.getNivel()){
+        if (nivel >= o.getNivel()) {
             return 1;
         } else {
-            return -1;  
+            return -1;
         }
     }
+
     @Override
-    public String toString(){
-        
-        return codigo + " --- " + nombre + " " + apellido + " --- " + nivel;
+    public String toString() {
+
+        return "Paciente : " + nombre + " con prioridad nivel " + nivel;
     }
 }
