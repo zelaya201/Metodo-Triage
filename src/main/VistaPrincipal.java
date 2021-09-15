@@ -366,11 +366,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void mostrarTabla(){
         modelo = (DefaultTableModel) tbpaciente.getModel();
         modelo.setRowCount(0);
-        int i = 1;
+ 
         
         for(Paciente x : listaPacientes){
-            modelo.addRow(new Object[]{i, x.getNombre(), x.getEdad(), x.getGenero(), x.getObservaciones(), x.getNivel(), x.getEstado()});
-            i++;
+            modelo.addRow(new Object[]{x.getCodigo(), x.getNombre(), x.getEdad(), x.getGenero(), x.getObservaciones(), x.getNivel(), x.getEstado()});
+     
         }
 
         tbpaciente.setModel(modelo);
