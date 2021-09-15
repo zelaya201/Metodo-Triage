@@ -13,28 +13,24 @@ public class Paciente implements Comparable<Paciente>{
     //Datos personales del paciente
     private int codigo;//Autoincrementable
     private String nombre;
-    private String apellido;
     private int edad;
     private String genero;
     //Datos clinicos del paciente
     private int nivel; //leve, grave, muy grave
     private String observaciones;
-    private String tipoSangre;
     private String estado; //En espera, atendido, de alta, cancelado (fallecido o retirado)
 
     public Paciente() {
     }
 
-    public Paciente(int codigo, String nombre, String apellido, int edad, String genero, int nivel, String observaciones, String tipoSangre, String estado) {
+    // Constructor para guardado en el array
+    public Paciente(int codigo, String nombre, int edad, String genero, int nivel, String observaciones) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.apellido = apellido;
         this.edad = edad;
         this.genero = genero;
         this.nivel = nivel;
         this.observaciones = observaciones;
-        this.tipoSangre = tipoSangre;
-        this.estado = estado;
     }
 
     public int getCodigo() {
@@ -53,13 +49,13 @@ public class Paciente implements Comparable<Paciente>{
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+//    public String getApellido() {
+//        return apellido;
+//    }
+//
+//    public void setApellido(String apellido) {
+//        this.apellido = apellido;
+//    }
 
     public int getEdad() {
         return edad;
@@ -93,14 +89,6 @@ public class Paciente implements Comparable<Paciente>{
         this.observaciones = observaciones;
     }
 
-    public String getTipoSangre() {
-        return tipoSangre;
-    }
-
-    public void setTipoSangre(String tipoSangre) {
-        this.tipoSangre = tipoSangre;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -120,6 +108,6 @@ public class Paciente implements Comparable<Paciente>{
     @Override
     public String toString(){
         
-        return codigo + " --- " + nombre + " " + apellido + " --- " + nivel;
+        return codigo + " --- " + nombre + " --- " + nivel;
     }
 }
