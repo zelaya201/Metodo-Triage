@@ -5,7 +5,9 @@
  */
 package main;
 
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import modelo.Paciente;
 
 /**
  *
@@ -13,12 +15,15 @@ import javax.swing.JFrame;
  */
 public class VistaPrincipal extends javax.swing.JFrame {
 
+    ArrayList<Paciente> listaPacientes;
+    
     /**
      * Creates new form VistaPrincipal
      */
     public VistaPrincipal() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        listaPacientes = new ArrayList();
     }
 
     /**
@@ -57,7 +62,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 0, 0, 0, new java.awt.Color(210, 214, 222)));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jTedad.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0)));
