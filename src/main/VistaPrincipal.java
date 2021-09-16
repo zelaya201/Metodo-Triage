@@ -402,7 +402,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             nivel = 4;
         }
 //         Mario es el encargado del autoincrementable y el ESTADO
-        Paciente p = new Paciente("1", nombre, edad, genero, nivel, observacion, " MARIO");
+        Paciente p = new Paciente(String.valueOf(listaPacientes.size() + 1), nombre, edad, genero, nivel, observacion, " MARIO");
         listaPacientes.add(p);
         mostrarListaEspera(p);
         mostrarTabla();
@@ -415,7 +415,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnatenderActionPerformed
 
     private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
-        // TODO add your handling code here:
+        limpiar();
     }//GEN-LAST:event_btnlimpiarActionPerformed
 
     public void limpiar() {
