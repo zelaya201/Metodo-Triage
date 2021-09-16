@@ -46,16 +46,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     }
 
-    public void enabledbt(){
-    
-        if(!jTnom.getText().isEmpty() && !jTedad.getText().isEmpty() && !jTobserv.getText().isEmpty()){
+    public void enabledbt() {
+
+        if (!jTnom.getText().isEmpty() && !jTedad.getText().isEmpty() && !jTobserv.getText().isEmpty()) {
             btnagregar.setEnabled(true);
-        }else{
+        } else {
             btnagregar.setEnabled(false);
         }
-    
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -385,7 +385,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
-
+//        btnagregar.setEnabled(false);
         String nombre = this.jTnom.getText();
         String edad = this.jTedad.getText();
         String genero = this.cbgene.getSelectedItem().toString();
@@ -401,49 +401,50 @@ public class VistaPrincipal extends javax.swing.JFrame {
         } else if (nivelCadena.equals("Leve")) {
             nivel = 4;
         }
-//         Mario es el encargado del las prioridades
+//         Mario es el encargado del autoincrementable y el ESTADO
         Paciente p = new Paciente("1", nombre, edad, genero, nivel, observacion, " MARIO");
         listaPacientes.add(p);
         mostrarListaEspera(p);
         mostrarTabla();
         limpiar();
+        
     }//GEN-LAST:event_btnagregarActionPerformed
 
     private void btnatenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnatenderActionPerformed
-        JOptionPane.showMessageDialog(null, "PROBANDO CARAJO");
+
     }//GEN-LAST:event_btnatenderActionPerformed
 
     private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnlimpiarActionPerformed
 
-
-    public void limpiar(){
+    public void limpiar() {
         this.jTnom.setText("");
         this.jTedad.setText("");
         this.cbgene.setSelectedIndex(0);
         this.cbnivel.setSelectedIndex(0);
         this.jTobserv.setText("");
+        enabledbt();
     }
-    
-    public void mostrarListaEspera(Paciente p){
+
+    public void mostrarListaEspera(Paciente p) {
         colaP.offer(p);
         ListaEspera modelo = new ListaEspera(colaP.toArray());
         jLespera.setModel(modelo);
     }
-    
+
     private void mostrarTabla() {
-        
+
         modelo = (DefaultTableModel) tbpaciente.getModel();
         modelo.setRowCount(0);
-        
-        for(Paciente x : listaPacientes){
-            modelo.addRow(new Object[]{x.getNumero(), 
-                x.getNombre(), 
-                x.getEdad(), 
-                x.getGenero(), 
-                x.getObservaciones(), 
-                x.getNivel(), 
+
+        for (Paciente x : listaPacientes) {
+            modelo.addRow(new Object[]{x.getNumero(),
+                x.getNombre(),
+                x.getEdad(),
+                x.getGenero(),
+                x.getObservaciones(),
+                x.getNivel(),
                 x.getEstado()
             });
 
@@ -454,16 +455,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void jTnomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTnomKeyTyped
         char val = evt.getKeyChar();
-        if((val<'a' || val>'z') && (val<'A' || val>'Z') && (val != ' ') && (val !='ñ')&& (val !='Ñ')&&(val<'á'|| val>'ú')&&(val<'Á'||val>'Ú')){
+        if ((val < 'a' || val > 'z') && (val < 'A' || val > 'Z') && (val != ' ') && (val != 'ñ') && (val != 'Ñ') && (val < 'á' || val > 'ú') && (val < 'Á' || val > 'Ú')) {
             evt.consume();
         }
     }//GEN-LAST:event_jTnomKeyTyped
 
     private void jTedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTedadKeyTyped
         char val = evt.getKeyChar();
-        if(val < '0' || val > '9'){
+        if (val < '0' || val > '9') {
             evt.consume();
-        }        
+        }
     }//GEN-LAST:event_jTedadKeyTyped
 
     private void jTnomKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTnomKeyReleased
@@ -477,7 +478,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void jTobservKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTobservKeyReleased
         enabledbt();
     }//GEN-LAST:event_jTobservKeyReleased
-
 
     /**
      * @param args the command line arguments
