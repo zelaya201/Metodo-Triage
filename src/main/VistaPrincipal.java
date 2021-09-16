@@ -197,7 +197,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 20);
         jPanel1.add(jLabel6, gridBagConstraints);
 
         jScrollPane3.setViewportView(jLespera);
@@ -205,13 +205,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridheight = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 175;
         gridBagConstraints.ipady = 475;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 147, 10);
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 20);
         jPanel1.add(jScrollPane3, gridBagConstraints);
 
         btnagregar.setBackground(new java.awt.Color(61, 137, 248));
@@ -289,7 +289,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -376,7 +375,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.gridy = 7;
         gridBagConstraints.ipadx = 75;
         gridBagConstraints.ipady = 5;
-        gridBagConstraints.insets = new java.awt.Insets(250, 0, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         jPanel1.add(btnatender, gridBagConstraints);
 
         btnlimpiar.setBackground(new java.awt.Color(61, 137, 248));
