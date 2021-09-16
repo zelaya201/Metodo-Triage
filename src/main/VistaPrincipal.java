@@ -1,10 +1,11 @@
 package main;
 
+import ds.desktop.notify.DesktopNotify;
+import ds.desktop.notify.NotifyTheme;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ColaArrayPrioridad;
+import modelo.ColaPrioridadN;
 import modelo.ListaEspera;
 import modelo.Paciente;
 
@@ -15,35 +16,37 @@ import modelo.Paciente;
 public class VistaPrincipal extends javax.swing.JFrame {
 
     ArrayList<Paciente> listaPacientes;
+    Paciente atendido;
     DefaultTableModel modelo;
 
     /**
      * Creates new form VistaPrincipal
      */
-    ColaArrayPrioridad colaP;
+    ColaPrioridadN colaP;
 
     public VistaPrincipal() {
         initComponents();
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         listaPacientes = new ArrayList();
-        colaP = new ColaArrayPrioridad();
+        colaP = new ColaPrioridadN(this.cbnivel.getItemCount());
+        //colaP = new ColaPrioridadN();
 //        Paciente p1 = new Paciente("1", "Luis Ramos", "20", "Masculino", 2, "Sin observaciones", "En espera");
-//        Paciente p2 = new Paciente("2", "Mario Zelaya", "19", "Masculino", 3, "Sin observaciones", "Atendido");
+//        Paciente p2 = new Paciente("2", "Mario Zelaya", "19", "Masculino", 3, "Sin observaciones", "En espera");
 //        Paciente p3 = new Paciente("3", "Julio Torres", "32", "Masculino", 1, "Sin observaciones", "En espera");
-
+//
 //        listaPacientes.add(p1);
 //        listaPacientes.add(p2);
 //        listaPacientes.add(p3);
-//        colaP.offer(p1);
-//        colaP.offer(p2);
-//        colaP.offer(p3);
+//        colaP.offer(p1, p1.getNivel()-1);
+//        colaP.offer(p2, p2.getNivel()-1);
+//        colaP.offer(p3, p3.getNivel()-1);
 //        ListaEspera modelo = new ListaEspera(colaP.toArray());
 //        jLespera.setModel(modelo);
-//        
+        
         mostrarTabla();
         btnagregar.setEnabled(false);
-
+        btnatender.setEnabled(false);
     }
 
     public void enabledbt() {
@@ -54,6 +57,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
             btnagregar.setEnabled(false);
         }
 
+            
+        if (colaP.isEmpty()) {
+            btnatender.setEnabled(false);
+        }else {
+            btnatender.setEnabled(true);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -197,11 +206,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridheight = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 175;
+        gridBagConstraints.ipady = 475;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 80, 10);
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 147, 10);
         jPanel1.add(jScrollPane3, gridBagConstraints);
 
         btnagregar.setBackground(new java.awt.Color(61, 137, 248));
@@ -346,6 +356,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnatender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnatender.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnatender.setIcons(null);
+        btnatender.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                btnatenderFocusLost(evt);
+            }
+        });
+        btnatender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnatenderMouseReleased(evt);
+            }
+        });
         btnatender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnatenderActionPerformed(evt);
@@ -353,10 +373,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.ipadx = 75;
         gridBagConstraints.ipady = 5;
-        gridBagConstraints.insets = new java.awt.Insets(-100, 0, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(250, 0, 0, 0);
         jPanel1.add(btnatender, gridBagConstraints);
 
         btnlimpiar.setBackground(new java.awt.Color(61, 137, 248));
@@ -402,16 +422,31 @@ public class VistaPrincipal extends javax.swing.JFrame {
             nivel = 4;
         }
 //         Mario es el encargado del autoincrementable y el ESTADO
-        Paciente p = new Paciente(String.valueOf(listaPacientes.size() + 1), nombre, edad, genero, nivel, observacion, " MARIO");
+        Paciente p = new Paciente(String.valueOf(listaPacientes.size() + 1), nombre, edad, genero, nivel, observacion, "En espera");
         listaPacientes.add(p);
-        mostrarListaEspera(p);
+        colaP.offer(p, p.getNivel()-1);
+        mostrarListaEspera(colaP);
         mostrarTabla();
         limpiar();
+        this.btnatender.setEnabled(true);
         
     }//GEN-LAST:event_btnagregarActionPerformed
 
     private void btnatenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnatenderActionPerformed
-
+        if (!colaP.isEmpty()) {
+            atendido = (Paciente) colaP.poll();
+            mostrarListaEspera(colaP);
+            
+            DesktopNotify.setDefaultTheme(NotifyTheme.Green);
+            DesktopNotify.showDesktopMessage("Paciente atendido", "El paciente " + atendido.getNombre() + " ha sido atendido exitosamente.", DesktopNotify.SUCCESS, 8000);
+            
+            for (Paciente x: listaPacientes) {
+              if (x.equals(atendido)) {
+                  x.setEstado("Atendido");
+              }
+            }
+            mostrarTabla();    
+        }
     }//GEN-LAST:event_btnatenderActionPerformed
 
     private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
@@ -427,8 +462,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         enabledbt();
     }
 
-    public void mostrarListaEspera(Paciente p) {
-        colaP.offer(p);
+    public void mostrarListaEspera(ColaPrioridadN colaP) {
         ListaEspera modelo = new ListaEspera(colaP.toArray());
         jLespera.setModel(modelo);
     }
@@ -438,7 +472,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         modelo = (DefaultTableModel) tbpaciente.getModel();
         modelo.setRowCount(0);
 
-        for (Paciente x : listaPacientes) {
+        for (Paciente x: listaPacientes) {
+
             modelo.addRow(new Object[]{x.getNumero(),
                 x.getNombre(),
                 x.getEdad(),
@@ -478,6 +513,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void jTobservKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTobservKeyReleased
         enabledbt();
     }//GEN-LAST:event_jTobservKeyReleased
+
+    private void btnatenderFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnatenderFocusLost
+        enabledbt();
+    }//GEN-LAST:event_btnatenderFocusLost
+
+    private void btnatenderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnatenderMouseReleased
+        enabledbt();
+    }//GEN-LAST:event_btnatenderMouseReleased
 
     /**
      * @param args the command line arguments

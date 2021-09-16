@@ -14,6 +14,10 @@ import java.util.ArrayList;
 public class ColaPrioridadN <T> {
     private ArrayList<Nodo> cola;
     
+    public ColaPrioridadN(){
+        
+    }
+    
     public ColaPrioridadN(int p) {
         this.cola = new ArrayList();
         for (int i = 0; i < p; i++) {
@@ -49,7 +53,7 @@ public class ColaPrioridadN <T> {
             while(fn.getSiguiente() != null) {
                 fn = fn.getSiguiente();
             }
-            fn.setSiguiente(fn);
+            fn.setSiguiente(n);
         }
     }
     
