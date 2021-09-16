@@ -30,19 +30,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         listaPacientes = new ArrayList();
         colaP = new ColaPrioridadN(this.cbnivel.getItemCount());
-        //colaP = new ColaPrioridadN();
-//        Paciente p1 = new Paciente("1", "Luis Ramos", "20", "Masculino", 2, "Sin observaciones", "En espera");
-//        Paciente p2 = new Paciente("2", "Mario Zelaya", "19", "Masculino", 3, "Sin observaciones", "En espera");
-//        Paciente p3 = new Paciente("3", "Julio Torres", "32", "Masculino", 1, "Sin observaciones", "En espera");
-//
-//        listaPacientes.add(p1);
-//        listaPacientes.add(p2);
-//        listaPacientes.add(p3);
-//        colaP.offer(p1, p1.getNivel()-1);
-//        colaP.offer(p2, p2.getNivel()-1);
-//        colaP.offer(p3, p3.getNivel()-1);
-//        ListaEspera modelo = new ListaEspera(colaP.toArray());
-//        jLespera.setModel(modelo);
         
         mostrarTabla();
         btnagregar.setEnabled(false);
@@ -404,13 +391,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
-//        btnagregar.setEnabled(false);
+
         String nombre = this.jTnom.getText();
         String edad = this.jTedad.getText();
         String genero = this.cbgene.getSelectedItem().toString();
         int nivel = 0;
         String nivelCadena = this.cbnivel.getSelectedItem().toString();
         String observacion = this.jTobserv.getText();
+        
         if (nivelCadena.equals("Muy Grave")) {
             nivel = 1;
         } else if (nivelCadena.equals("Grave")) {
@@ -420,7 +408,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         } else if (nivelCadena.equals("Leve")) {
             nivel = 4;
         }
-//         Mario es el encargado del autoincrementable y el ESTADO
+
         Paciente p = new Paciente(String.valueOf(listaPacientes.size() + 1), nombre, edad, genero, nivel, observacion, "En espera");
         listaPacientes.add(p);
         colaP.offer(p, p.getNivel()-1);
